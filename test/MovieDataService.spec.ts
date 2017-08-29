@@ -8,9 +8,10 @@ describe('movieDataService', () => {
 
   describe('loadMovies', () => {
     it('should return movies from api', () => {
-      sinon.stub($, 'getJSON').returns({ then: function(cb) { cb(expectedMovies); } });
+      const getJsonStub = sinon.stub($, 'getJSON');
+      getJsonStub.returns({ then: function(cb) { cb(expectedMovies); } });
       expect(movieDataService.loadMovies().length).to.be.equal(1);
-      sinon.restore($.getJSON);
+      getJsonStub.restore();
     });
   });
 

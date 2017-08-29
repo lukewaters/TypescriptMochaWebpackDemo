@@ -5,15 +5,17 @@ import { expect } from 'chai';
 describe('MoviesViewModel', () => {
   let viewModel: MoviesViewModel;
   let movieDataServiceStub: Sinon.SinonSpy;
+  let loadMoviesStub: Sinon.SinonStub;
+
   beforeEach(() => {
-    sinon.stub(movieDataService, 'loadMovies').returns([new Movie('The Matrix', 1998, 5)]);
+    loadMoviesStub = sinon.stub(movieDataService, 'loadMovies').returns([new Movie('The Matrix', 1998, 5)]);
     movieDataServiceStub = sinon.spy(movieDataService, 'save');
     viewModel = new MoviesViewModel();
   });
 
   afterEach(() => {
-    sinon.restore(movieDataService.loadMovies);
-    sinon.restore(movieDataService.save);
+    loadMoviesStub.restore();
+    movieDataServiceStub.restore();
   });
 
   it('should load movies', () => {
